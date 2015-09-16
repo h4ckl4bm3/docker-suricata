@@ -29,7 +29,7 @@ RUN cd /usr/local/src/libtool-2.4.6 && ./configure ; make ; make install ; cd /u
 # Install pkg-config - avoiding using the 'bundled' version of glib with pkg-config
 RUN cd /usr/local/src/libffi-3.2.1 && ./configure ; make ; make install ; cd /usr/local/src ; rm -rf /usr/local/src/libffi-3.2.1
 RUN cd /usr/local/src/gettext-0.19.4 && ./configure ; make ; make install; ldconfig ; cd /usr/local/src ; rm -rf /usr/local/src/gettext-0.19.4
- ADD glib-2.44.1.tar.xz /usr/local/src/
+ADD glib-2.44.1.tar.xz /usr/local/src/
 RUN cd /usr/local/src/glib-2.44.1 && ./configure  LIBFFI_LIBS="-L/usr/local/lib/ -lffi" LIBFFI_CFLAGS="-I/usr/local/lib/libffi-3.2.1/include/" ; make ; make install ; cd /usr/local/src ; rm -rf /usr/local/src/glib-2.44.1
 RUN cd /usr/local/src/pkg-config-0.28 && ./configure GLIB_LIBS="-L/usr/local/lib -lglib-2.0" GLIB_CFLAGS="-I/usr/local/include/glib-2.0 -I/usr/local/lib/glib-2.0/include" ; make ; make install ; cd /usr/local/src ; rm -rf /usr/local/src/pkg-config-0.28
 
@@ -37,7 +37,7 @@ RUN cd /usr/local/src/pkg-config-0.28 && ./configure GLIB_LIBS="-L/usr/local/lib
 RUN cd /usr/local/src/nspr-4.10.8/nspr && sed -ri 's#^(RELEASE_BINS =).*#\1#' pr/src/misc/Makefile.in && sed -i 's#$(LIBRARY) ##' config/rules.mk && ./configure --enable-ipv6 --enable-64bit --with-pthreads  ; make ; make install; ldconfig
 
 # http://www.linuxfromscratch.org/blfs/view/svn/postlfs/nss.html
- ADD nss-3.19.1-standalone-1.patch /usr/local/src/
+ADD nss-3.19.1-standalone-1.patch /usr/local/src/
 RUN cd /usr/local/src/nss-3.19.1/ && patch -Np1 -i ../nss-3.19.1-standalone-1.patch && cd nss && export BUILD_OPT=1 ; export USE_64=1; export ZLIB_LIBS=-lz; export NSPR_INCLUDE_DIR=/usr/local/include/nspr; make 
 RUN cd /usr/local/src/nss-3.19.1/dist && install -v -m755 Linux*/lib/*.so /usr/lib &&  install -v -m644 Linux*/lib/*.chk /usr/lib &&  install -v -m644 Linux*/lib/libcrmf.a /usr/lib &&  install -v -m755 -d /usr/include/nss && cp -v -RL public/nss/* /usr/include/nss && cp -v -RL private/nss/* /usr/include/nss && chmod -v 644 /usr/include/nss/* && install -v -m755 Linux*/bin/certutil /usr/bin && install -v -m755 Linux*/bin/nss-config /usr/bin && install -v -m755 Linux*/bin/pk12util /usr/bin && install -v -m644 Linux*/lib/pkgconfig/nss.pc /usr/lib/pkgconfig
 RUN cd /usr/local/src ; rm -rf /usr/local/src/nss-3.19.1
