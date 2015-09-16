@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y  \
 ADD src/*gz /usr/local/src/
 
 # install specific version of major depends
-RUN cd /usr/local/src/ &&file-5.22 && ./configure ; make ; make install ; cd /usr/local/src ; rm -rf /usr/local/src/file-5.22
+RUN cd /usr/local/src/file-5.22 && ./configure ; make ; make install ; cd /usr/local/src ; rm -rf /usr/local/src/file-5.22
 RUN cd /usr/local/src/LuaJIT-2.0.4 && make ; make install ; cd /usr/local/src ; rm -rf /usr/local/src/LuaJIT-2.0.4
 RUN cd /usr/local/src/libnet-1.2-rc3 && ./configure ; make ; make install ; cd /usr/local/src ; rm -rf /usr/local/src/libnet-1.2-rc3 
 RUN cd /usr/local/src/libpcap-1.7.3 && ./configure ; make ; make install ; cd /usr/local/src ; rm -rf /usr/local/src/libpcap-1.7.3
